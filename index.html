@@ -59,15 +59,21 @@
         <p>You should lowk look at some of my stuff</p>
 
         <div class="links">
-            <a href="https://propro-9.itch.io/" target="_blank" rel="noopener noreferrer">
+            <a href="https://propro-9.itch.io/"
+               target="_blank"
+               rel="noopener noreferrer">
                 itch.io
             </a>
 
-            <a href="https://discord.gg/TgCeMFfEwG" target="_blank" rel="noopener noreferrer">
+            <a href="https://discord.gg/TgCeMFfEwG"
+               target="_blank"
+               rel="noopener noreferrer">
                 discord
             </a>
 
-            <a href="https://www.youtube.com/@Propro_9" target="_blank" rel="noopener noreferrer">
+            <a href="https://www.youtube.com/@Propro_9"
+               target="_blank"
+               rel="noopener noreferrer">
                 YouTube
             </a>
         </div>
@@ -79,31 +85,39 @@
     </div>
 
     <script>
-        const api = "https://countapi.mileshilliard.com/api/v1";
-        const visitorsKey = "propro9-unique-visitors-2026";
+        const API = "https://countapi.mileshilliard.com/api/v1";
+        const COUNTER = "propro9-unique-visitors-v2";
+        const VISITED_KEY = "propro9_visitor_counted_v2";
 
-        const hasVisited = localStorage.getItem("propro9_has_visited");
+        async function updateVisitorCount() {
+            const counterDisplay =
+                document.getElementById("unique-visitors");
 
-        if (!hasVisited) {
-            fetch(`${api}/hit/${visitorsKey}`)
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById("unique-visitors").textContent = data.value;
-                    localStorage.setItem("propro9_has_visited", "true");
-                })
-                .catch(() => {
-                    document.getElementById("unique-visitors").textContent = "???";
-                });
-        } else {
-            fetch(`${api}/get/${visitorsKey}`)
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById("unique-visitors").textContent = data.value;
-                })
-                .catch(() => {
-                    document.getElementById("unique-visitors").textContent = "???";
-                });
+            try {
+                if (!localStorage.getItem(VISITED_KEY)) {
+                    localStorage.setItem(VISITED_KEY, "yes");
+
+                    const response =
+                        await fetch(`${API}/hit/${COUNTER}`);
+
+                    const data = await response.json();
+
+                    counterDisplay.textContent = data.value;
+                } else {
+                    const response =
+                        await fetch(`${API}/get/${COUNTER}`);
+
+                    const data = await response.json();
+
+                    counterDisplay.textContent = data.value;
+                }
+            } catch (error) {
+                console.error("Counter creature died:", error);
+                counterDisplay.textContent = "???";
+            }
         }
+
+        updateVisitorCount();
     </script>
 </body>
 </html>
