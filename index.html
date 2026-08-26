@@ -42,12 +42,6 @@
         .links {
             margin-top: 30px;
         }
-
-        .stats {
-            margin-top: 30px;
-            color: #888888;
-            font-size: 14px;
-        }
     </style>
 </head>
 
@@ -77,47 +71,6 @@
                 YouTube
             </a>
         </div>
-
-        <div class="stats">
-            Unique visitors:
-            <span id="unique-visitors">...</span>
-        </div>
     </div>
-
-    <script>
-        const API = "https://countapi.mileshilliard.com/api/v1";
-        const COUNTER = "propro9-unique-visitors-v2";
-        const VISITED_KEY = "propro9_visitor_counted_v2";
-
-        async function updateVisitorCount() {
-            const counterDisplay =
-                document.getElementById("unique-visitors");
-
-            try {
-                if (!localStorage.getItem(VISITED_KEY)) {
-                    localStorage.setItem(VISITED_KEY, "yes");
-
-                    const response =
-                        await fetch(`${API}/hit/${COUNTER}`);
-
-                    const data = await response.json();
-
-                    counterDisplay.textContent = data.value;
-                } else {
-                    const response =
-                        await fetch(`${API}/get/${COUNTER}`);
-
-                    const data = await response.json();
-
-                    counterDisplay.textContent = data.value;
-                }
-            } catch (error) {
-                console.error("Counter creature died:", error);
-                counterDisplay.textContent = "???";
-            }
-        }
-
-        updateVisitorCount();
-    </script>
 </body>
 </html>
