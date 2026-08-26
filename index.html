@@ -43,7 +43,7 @@
             margin-top: 30px;
         }
 
-        .visitor-counter {
+        .stats {
             margin-top: 30px;
             color: #888888;
             font-size: 14px;
@@ -59,56 +59,51 @@
         <p>You should lowk look at some of my stuff</p>
 
         <div class="links">
-
-            <a
-                href="https://propro-9.itch.io/"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
+            <a href="https://propro-9.itch.io/" target="_blank" rel="noopener noreferrer">
                 itch.io
             </a>
 
-            <a
-                href="https://discord.gg/TgCeMFfEwG"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
+            <a href="https://discord.gg/TgCeMFfEwG" target="_blank" rel="noopener noreferrer">
                 discord
             </a>
 
-            <a
-                href="https://www.youtube.com/@Propro_9"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
+            <a href="https://www.youtube.com/@Propro_9" target="_blank" rel="noopener noreferrer">
                 YouTube
             </a>
-
         </div>
 
-        <p class="visitor-counter">
-            Lifetime visits:
-            <span id="visitor-count">...</span>
-        </p>
+        <div class="stats">
+            Unique visitors:
+            <span id="unique-visitors">...</span>
+        </div>
     </div>
 
     <script>
-        const counterKey = "propro9-github-site-visits-2026";
+        const api = "https://countapi.mileshilliard.com/api/v1";
+        const visitorsKey = "propro9-unique-visitors-2026";
 
-        fetch(
-            `https://countapi.mileshilliard.com/api/v1/hit/${counterKey}`
-        )
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById("visitor-count").textContent =
-                    data.value;
-            })
-            .catch(error => {
-                console.error("Visitor counter exploded 💀", error);
+        const hasVisited = localStorage.getItem("propro9_has_visited");
 
-                document.getElementById("visitor-count").textContent =
-                    "???";
-            });
+        if (!hasVisited) {
+            fetch(`${api}/hit/${visitorsKey}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("unique-visitors").textContent = data.value;
+                    localStorage.setItem("propro9_has_visited", "true");
+                })
+                .catch(() => {
+                    document.getElementById("unique-visitors").textContent = "???";
+                });
+        } else {
+            fetch(`${api}/get/${visitorsKey}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("unique-visitors").textContent = data.value;
+                })
+                .catch(() => {
+                    document.getElementById("unique-visitors").textContent = "???";
+                });
+        }
     </script>
 </body>
 </html>
