@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Propro9 | Projects</title>
-    
+
     <style>
         body {
             background-color: #121212;
@@ -41,6 +41,12 @@
         .links {
             margin-top: 30px;
         }
+
+        .visitor-counter {
+            margin-top: 30px;
+            color: #888;
+            font-size: 14px;
+        }
     </style>
 </head>
 
@@ -52,18 +58,66 @@
         <p>You should lowk look at some of my stuff</p>
 
         <div class="links">
-            <a href="https://propro-9.itch.io/" target="_blank" rel="noopener noreferrer">
+            <a href="https://propro-9.itch.io/"
+               target="_blank"
+               rel="noopener noreferrer">
                 itch.io
             </a>
 
-            <a href="https://discord.gg/TgCeMFfEwG">
+            <a href="https://discord.gg/TgCeMFfEwG"
+               target="_blank"
+               rel="noopener noreferrer">
                 discord
             </a>
 
-            <a href="https://www.youtube.com/@Propro_9" target="_blank" rel="noopener noreferrer">
+            <a href="https://www.youtube.com/@Propro_9"
+               target="_blank"
+               rel="noopener noreferrer">
                 YouTube
             </a>
         </div>
+
+        <p class="visitor-counter">
+            Lifetime visitors:
+            <span id="visitor-count">...</span>
+        </p>
     </div>
+
+    <script>
+        const counterKey = "propro9-github-site-visitors-2026";
+        const counterURL =
+            "https://countapi.mileshilliard.com/api/v1";
+
+        const alreadyVisited =
+            localStorage.getItem("propro9AlreadyVisited");
+
+        let requestURL;
+
+        if (alreadyVisited) {
+            requestURL = `${counterURL}/get/${counterKey}`;
+        } else {
+            requestURL = `${counterURL}/hit/${counterKey}`;
+        }
+
+        fetch(requestURL)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("visitor-count").textContent =
+                    data.value;
+
+                if (!alreadyVisited) {
+                    localStorage.setItem(
+                        "propro9AlreadyVisited",
+                        "true"
+                    );
+                }
+            })
+            .catch(error => {
+                console.error("Visitor counter died 💀", error);
+
+                document.getElementById("visitor-count").textContent =
+                    "???";
+            });
+    </script>
 </body>
 </html>
