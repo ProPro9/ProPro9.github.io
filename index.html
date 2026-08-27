@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,7 +17,7 @@
         }
 
         .container {
-            max-width: 600px;
+            max-width: 900px;
             margin: 0 auto;
             border: 2px solid #333;
             background-color: #1a1a1a;
@@ -26,6 +27,11 @@
 
         h1 {
             color: #ff4757;
+        }
+
+        h2 {
+            color: #ff4757;
+            margin-top: 45px;
         }
 
         a {
@@ -41,6 +47,46 @@
 
         .links {
             margin-top: 30px;
+        }
+
+        .screenshots {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .screenshots img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border: 2px solid #333;
+            border-radius: 6px;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+            cursor: pointer;
+        }
+
+        .screenshots img:hover {
+            transform: scale(1.03);
+            border-color: #ff4757;
+        }
+
+        #image-viewer {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.9);
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+            cursor: pointer;
+        }
+
+        #image-viewer img {
+            max-width: 90%;
+            max-height: 90%;
+            border: 2px solid #444;
+            border-radius: 8px;
         }
     </style>
 </head>
@@ -71,6 +117,48 @@
                 YouTube
             </a>
         </div>
+
+        <h2>Latest Game Screenshots</h2>
+
+        <div class="screenshots" id="screenshots"></div>
     </div>
+
+    <div id="image-viewer">
+        <img id="viewer-image" src="" alt="Screenshot">
+    </div>
+
+    <script>
+        const screenshots = document.getElementById("screenshots");
+        const viewer = document.getElementById("image-viewer");
+        const viewerImage = document.getElementById("viewer-image");
+
+        const MAX_IMAGES = 50;
+
+        for (let i = 1; i <= MAX_IMAGES; i++) {
+            const img = document.createElement("img");
+
+            img.src = `img_${i}.png`;
+            img.alt = `Game Screenshot ${i}`;
+
+            img.onload = () => {
+                screenshots.appendChild(img);
+            };
+
+            img.onerror = () => {
+                img.remove();
+            };
+
+            img.addEventListener("click", () => {
+                viewerImage.src = img.src;
+                viewer.style.display = "flex";
+            });
+        }
+
+        viewer.addEventListener("click", () => {
+            viewer.style.display = "none";
+            viewerImage.src = "";
+        });
+    </script>
 </body>
 </html>
+```
