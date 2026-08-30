@@ -7,157 +7,1271 @@
     <title>Propro9 | Projects</title>
 
     <style>
-        body {
-            background-color: #121212;
-            color: #ffffff;
-            font-family: 'Courier New', Courier, monospace;
-            text-align: center;
-            padding: 50px 20px;
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            border: 2px solid #333;
-            background-color: #1a1a1a;
-            padding: 30px;
-            border-radius: 8px;
+        html {
+            scroll-behavior: smooth;
+        }
+
+        :root {
+            --background: #0c0c0f;
+            --sidebar: #111116;
+            --panel: #17171d;
+            --panel-hover: #1e1e26;
+            --border: #2c2c36;
+
+            --text: #eeeeee;
+            --muted: #9696a3;
+
+            --red: #ff4757;
+            --red-dark: #c93644;
+            --blue: #5352ed;
+
+            --sidebar-width: 240px;
+        }
+
+        body {
+            background:
+                radial-gradient(
+                    circle at 80% 10%,
+                    rgba(83, 82, 237, 0.08),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 20% 80%,
+                    rgba(255, 71, 87, 0.06),
+                    transparent 30%
+                ),
+                var(--background);
+
+            color: var(--text);
+            font-family: "Courier New", Courier, monospace;
+            min-height: 100vh;
+        }
+
+        /* --------------------------------
+           SIDEBAR
+        -------------------------------- */
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+
+            width: var(--sidebar-width);
+            height: 100vh;
+
+            background: rgba(17, 17, 22, 0.96);
+            border-right: 1px solid var(--border);
+
+            display: flex;
+            flex-direction: column;
+
+            padding: 25px 18px;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 27px;
+            font-weight: bold;
+            color: var(--red);
+            margin-bottom: 6px;
+
+            text-shadow:
+                0 0 15px rgba(255, 71, 87, 0.25);
+        }
+
+        .logo-subtitle {
+            color: var(--muted);
+            font-size: 12px;
+            margin-bottom: 30px;
+        }
+
+        .status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+
+            background: #16161c;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+
+            padding: 9px 10px;
+            margin-bottom: 25px;
+
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+
+            background: #2ed573;
+
+            box-shadow:
+                0 0 8px rgba(46, 213, 115, 0.7);
+
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.4;
+            }
+        }
+
+        .nav {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        .nav a {
+            color: var(--muted);
+            text-decoration: none;
+
+            padding: 11px 12px;
+
+            border-radius: 6px;
+            border: 1px solid transparent;
+
+            font-size: 14px;
+
+            transition:
+                background 0.2s ease,
+                color 0.2s ease,
+                border-color 0.2s ease,
+                transform 0.2s ease;
+        }
+
+        .nav a::before {
+            content: "> ";
+            color: #555;
+        }
+
+        .nav a:hover {
+            background: var(--panel);
+            border-color: var(--border);
+            color: white;
+
+            transform: translateX(3px);
+        }
+
+        .nav a.active {
+            background: rgba(255, 71, 87, 0.1);
+            border-color: rgba(255, 71, 87, 0.45);
+            color: var(--red);
+        }
+
+        .nav a.active::before {
+            color: var(--red);
+        }
+
+        .sidebar-bottom {
+            margin-top: auto;
+
+            color: #575762;
+            font-size: 11px;
+            line-height: 1.6;
+        }
+
+        /* --------------------------------
+           MAIN CONTENT
+        -------------------------------- */
+
+        main {
+            margin-left: var(--sidebar-width);
+            padding: 60px;
+
+            max-width: 1300px;
+        }
+
+        section {
+            min-height: 65vh;
+            padding: 40px 0;
+
+            scroll-margin-top: 20px;
+        }
+
+        .section-label {
+            color: var(--blue);
+            font-size: 12px;
+
+            letter-spacing: 2px;
+            text-transform: uppercase;
+
+            margin-bottom: 10px;
         }
 
         h1 {
-            color: #ff4757;
+            font-size: clamp(42px, 7vw, 78px);
+            line-height: 0.95;
+
+            margin-bottom: 25px;
+        }
+
+        h1 span {
+            color: var(--red);
         }
 
         h2 {
-            color: #ff4757;
-            margin-top: 45px;
+            color: var(--red);
+
+            font-size: 30px;
+            margin-bottom: 20px;
         }
 
-        a {
-            color: #5352ed;
+        h3 {
+            margin-bottom: 10px;
+        }
+
+        p {
+            line-height: 1.7;
+        }
+
+        .muted {
+            color: var(--muted);
+        }
+
+        /* --------------------------------
+           HERO
+        -------------------------------- */
+
+        #home {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            min-height: 90vh;
+        }
+
+        .hero-text {
+            max-width: 700px;
+
+            font-size: 16px;
+            color: var(--muted);
+
+            margin-bottom: 30px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .button {
+            display: inline-flex;
+            align-items: center;
+
+            padding: 12px 18px;
+
             text-decoration: none;
-            margin: 0 10px;
+            color: white;
+
+            background: var(--panel);
+
+            border: 1px solid var(--border);
+            border-radius: 6px;
+
             font-weight: bold;
+
+            transition:
+                transform 0.2s ease,
+                background 0.2s ease,
+                border-color 0.2s ease;
         }
 
-        a:hover {
-            color: #ff4757;
+        .button:hover {
+            transform: translateY(-2px);
+
+            background: var(--panel-hover);
+            border-color: var(--red);
         }
 
-        .links {
-            margin-top: 30px;
+        .button.primary {
+            background: var(--red);
+            border-color: var(--red);
+
+            color: white;
         }
+
+        .button.primary:hover {
+            background: var(--red-dark);
+        }
+
+        /* --------------------------------
+           ABOUT
+        -------------------------------- */
+
+        .about-box {
+            max-width: 780px;
+
+            padding: 25px;
+
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+
+            box-shadow:
+                0 12px 40px rgba(0, 0, 0, 0.18);
+        }
+
+        .terminal-line {
+            margin-top: 20px;
+
+            color: #b3b3bd;
+            font-size: 13px;
+        }
+
+        .terminal-line span {
+            color: #2ed573;
+        }
+
+        /* --------------------------------
+           PROJECT CARDS
+        -------------------------------- */
+
+        .projects-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(auto-fit, minmax(260px, 1fr));
+
+            gap: 18px;
+        }
+
+        .project-card {
+            position: relative;
+
+            padding: 24px;
+
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+
+            overflow: hidden;
+
+            transition:
+                transform 0.2s ease,
+                border-color 0.2s ease,
+                background 0.2s ease;
+        }
+
+        .project-card::before {
+            content: "";
+
+            position: absolute;
+            top: 0;
+            left: 0;
+
+            width: 4px;
+            height: 100%;
+
+            background: var(--red);
+
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-4px);
+            border-color: #474753;
+            background: var(--panel-hover);
+        }
+
+        .project-card:hover::before {
+            opacity: 1;
+        }
+
+        .project-number {
+            color: var(--blue);
+
+            font-size: 12px;
+            margin-bottom: 13px;
+        }
+
+        .project-card p {
+            color: var(--muted);
+
+            font-size: 14px;
+            margin-bottom: 18px;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+
+            margin-bottom: 18px;
+        }
+
+        .tag {
+            padding: 5px 8px;
+
+            border-radius: 4px;
+
+            background: #101015;
+            border: 1px solid #292933;
+
+            color: #b4b4bf;
+            font-size: 11px;
+        }
+
+        .project-link {
+            color: var(--red);
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 13px;
+        }
+
+        .project-link:hover {
+            text-decoration: underline;
+        }
+
+        /* --------------------------------
+           SCREENSHOTS
+        -------------------------------- */
 
         .screenshots {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 15px;
-            margin-top: 20px;
+
+            grid-template-columns:
+                repeat(auto-fit, minmax(250px, 1fr));
+
+            gap: 14px;
+
+            margin-top: 25px;
         }
 
-        .screenshots img {
+        .screenshot-wrapper {
+            position: relative;
+            overflow: hidden;
+
+            border-radius: 7px;
+
+            background: var(--panel);
+            border: 1px solid var(--border);
+
+            aspect-ratio: 16 / 10;
+        }
+
+        .screenshot-wrapper img {
             width: 100%;
-            height: 180px;
+            height: 100%;
+
             object-fit: cover;
-            border: 2px solid #333;
-            border-radius: 6px;
-            transition: transform 0.2s ease, border-color 0.2s ease;
+
             cursor: pointer;
+
+            transition:
+                transform 0.3s ease,
+                filter 0.3s ease;
         }
 
-        .screenshots img:hover {
-            transform: scale(1.03);
-            border-color: #ff4757;
+        .screenshot-wrapper:hover img {
+            transform: scale(1.04);
+            filter: brightness(0.8);
         }
+
+        .screenshot-wrapper::after {
+            content: "CLICK TO VIEW";
+
+            position: absolute;
+            left: 50%;
+            top: 50%;
+
+            transform:
+                translate(-50%, -40%);
+
+            opacity: 0;
+
+            pointer-events: none;
+
+            font-size: 12px;
+            font-weight: bold;
+
+            color: white;
+
+            transition:
+                opacity 0.2s ease,
+                transform 0.2s ease;
+        }
+
+        .screenshot-wrapper:hover::after {
+            opacity: 1;
+
+            transform:
+                translate(-50%, -50%);
+        }
+
+        .loading-gallery {
+            color: var(--muted);
+
+            padding: 30px 0;
+            font-size: 13px;
+        }
+
+        /* --------------------------------
+           LINKS / CONTACT
+        -------------------------------- */
+
+        .social-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(auto-fit, minmax(200px, 1fr));
+
+            gap: 15px;
+
+            max-width: 800px;
+        }
+
+        .social-card {
+            display: block;
+
+            padding: 20px;
+
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 7px;
+
+            text-decoration: none;
+
+            transition:
+                transform 0.2s ease,
+                border-color 0.2s ease;
+        }
+
+        .social-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--red);
+        }
+
+        .social-card strong {
+            color: white;
+        }
+
+        .social-card span {
+            display: block;
+
+            color: var(--muted);
+            font-size: 12px;
+
+            margin-top: 8px;
+        }
+
+        /* --------------------------------
+           IMAGE VIEWER
+        -------------------------------- */
 
         #image-viewer {
             display: none;
+
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.9);
+
+            background: rgba(0, 0, 0, 0.94);
+
+            backdrop-filter: blur(8px);
+
             align-items: center;
             justify-content: center;
-            z-index: 999;
+
+            padding: 30px;
+
+            z-index: 1000;
+
+            cursor: zoom-out;
+        }
+
+        #viewer-image {
+            max-width: 95vw;
+            max-height: 90vh;
+
+            object-fit: contain;
+
+            border: 1px solid #444;
+            border-radius: 8px;
+
+            box-shadow:
+                0 25px 80px rgba(0, 0, 0, 0.7);
+
+            animation: imagePop 0.2s ease;
+        }
+
+        @keyframes imagePop {
+            from {
+                transform: scale(0.96);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .viewer-close {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+
+            font-size: 28px;
+            color: white;
+
             cursor: pointer;
         }
 
-        #image-viewer img {
-            max-width: 90%;
-            max-height: 90%;
-            border: 2px solid #444;
-            border-radius: 8px;
+        /* --------------------------------
+           SCROLLBAR
+        -------------------------------- */
+
+        ::-webkit-scrollbar {
+            width: 9px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0c0c0f;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #34343f;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--red);
+        }
+
+        /* --------------------------------
+           MOBILE
+        -------------------------------- */
+
+        @media (max-width: 800px) {
+
+            :root {
+                --sidebar-width: 0px;
+            }
+
+            .sidebar {
+                position: sticky;
+
+                top: 0;
+
+                width: 100%;
+                height: auto;
+
+                flex-direction: row;
+                align-items: center;
+
+                padding: 10px;
+
+                overflow-x: auto;
+
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+
+                backdrop-filter: blur(12px);
+            }
+
+            .logo {
+                display: none;
+            }
+
+            .logo-subtitle,
+            .status,
+            .sidebar-bottom {
+                display: none;
+            }
+
+            .nav {
+                width: 100%;
+
+                flex-direction: row;
+                gap: 5px;
+            }
+
+            .nav a {
+                white-space: nowrap;
+
+                padding: 9px 11px;
+                font-size: 12px;
+            }
+
+            .nav a::before {
+                display: none;
+            }
+
+            main {
+                margin-left: 0;
+
+                padding: 25px 18px;
+            }
+
+            section {
+                padding: 50px 0;
+            }
+
+            #home {
+                min-height: 78vh;
+            }
+
+            h1 {
+                font-size: 48px;
+            }
+
+            .screenshots {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 
 <body>
-    <div class="container">
-        <h1>Propro9</h1>
 
-        <p>Well hello there, I make stuff</p>
-        <p>Some of the links and images below are things i worked on.</p>
-        <p>Take a look if you want to.</p>
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
 
-        <div class="links">
-            <a href="https://propro-9.itch.io/"
-               target="_blank"
-               rel="noopener noreferrer">
-                itch.io
-            </a>
-
-            <a href="https://discord.gg/TgCeMFfEwG"
-               target="_blank"
-               rel="noopener noreferrer">
-                discord
-            </a>
-
-            <a href="https://www.youtube.com/@Propro_9"
-               target="_blank"
-               rel="noopener noreferrer">
-                YouTube
-            </a>
+        <div class="logo">
+            PROPRO9
         </div>
 
-        <h2>Latest Game Screenshots</h2>
+        <div class="logo-subtitle">
+            game dev // professional spaghetti coder
+        </div>
 
-        <div class="screenshots" id="screenshots"></div>
-    </div>
+        <div class="status">
+            <div class="status-dot"></div>
+            currently making stuff
+        </div>
 
+        <nav class="nav">
+            <a href="#home" class="active">Home</a>
+            <a href="#about">About</a>
+            <a href="#projects">Projects</a>
+            <a href="#screenshots">Screenshots</a>
+            <a href="#links">Links</a>
+        </nav>
+
+        <div class="sidebar-bottom">
+            Propro9<br>
+            Somewhere inside Godot Engine
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN -->
+    <main>
+
+        <!-- HOME -->
+        <section id="home">
+
+            <div class="section-label">
+                /home/propro9
+            </div>
+
+            <h1>
+                I make<br>
+                <span>stuff.</span>
+            </h1>
+
+            <p class="hero-text">
+                Games, experiments, questionable code,
+                and whatever else I decide sounds like a good idea
+                at 2 AM.
+            </p>
+
+            <div class="hero-buttons">
+
+                <a
+                    href="#projects"
+                    class="button primary">
+                    View Projects
+                </a>
+
+                <a
+                    href="#screenshots"
+                    class="button">
+                    Screenshots
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- ABOUT -->
+        <section id="about">
+
+            <div class="section-label">
+                01 // about
+            </div>
+
+            <h2>
+                About Me
+            </h2>
+
+            <div class="about-box">
+
+                <p>
+                    Well hello there.
+                </p>
+
+                <br>
+
+                <p class="muted">
+                    I'm Propro9. I make games, mess around with
+                    programming, build random projects, and occasionally
+                    convince Godot Engine to do what I actually wanted.
+                </p>
+
+                <br>
+
+                <p class="muted">
+                    This website is basically a collection of things
+                    I've worked on, things I'm currently working on,
+                    and things that haven't exploded yet.
+                </p>
+
+                <div class="terminal-line">
+                    <span>propro9@computer:~$</span>
+                    ./make_something_cool
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- PROJECTS -->
+        <section id="projects">
+
+            <div class="section-label">
+                02 // projects
+            </div>
+
+            <h2>
+                Projects
+            </h2>
+
+            <div class="projects-grid">
+
+                <div class="project-card">
+
+                    <div class="project-number">
+                        PROJECT_001
+                    </div>
+
+                    <h3>
+                        Backrooms Project
+                    </h3>
+
+                    <p>
+                        A PS1-inspired horror game with procedural
+                        environments, cameras, exploration, and probably
+                        several bugs currently hiding in the walls.
+                    </p>
+
+                    <div class="tags">
+                        <span class="tag">Godot 4</span>
+                        <span class="tag">GDScript</span>
+                        <span class="tag">3D</span>
+                        <span class="tag">Horror</span>
+                    </div>
+
+                    <a
+                        class="project-link"
+                        href="https://propro-9.itch.io/"
+                        target="_blank"
+                        rel="noopener noreferrer">
+                        View on itch.io →
+                    </a>
+
+                </div>
+
+
+                <div class="project-card">
+
+                    <div class="project-number">
+                        PROJECT_002
+                    </div>
+
+                    <h3>
+                        Procedural Generation
+                    </h3>
+
+                    <p>
+                        Experiments with procedural rooms, hallways,
+                        architecture, props, lighting, and level layouts.
+                    </p>
+
+                    <div class="tags">
+                        <span class="tag">Procedural</span>
+                        <span class="tag">Godot</span>
+                        <span class="tag">Generation</span>
+                    </div>
+
+                    <a
+                        class="project-link"
+                        href="#screenshots">
+                        See Screenshots →
+                    </a>
+
+                </div>
+
+
+                <div class="project-card">
+
+                    <div class="project-number">
+                        PROJECT_003
+                    </div>
+
+                    <h3>
+                        More Eventually™
+                    </h3>
+
+                    <p>
+                        This is the highly advanced section reserved
+                        for projects that I have not created yet.
+                        Incredible technology.
+                    </p>
+
+                    <div class="tags">
+                        <span class="tag">Coming Soon™</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- SCREENSHOTS -->
+        <section id="screenshots">
+
+            <div class="section-label">
+                03 // gallery
+            </div>
+
+            <h2>
+                Latest Game Screenshots
+            </h2>
+
+            <p class="muted">
+                Click any screenshot to make it become unnecessarily large.
+            </p>
+
+            <div
+                class="loading-gallery"
+                id="gallery-status">
+                Searching for screenshots...
+            </div>
+
+            <div
+                class="screenshots"
+                id="screenshot-grid">
+            </div>
+
+        </section>
+
+
+        <!-- LINKS -->
+        <section id="links">
+
+            <div class="section-label">
+                04 // links
+            </div>
+
+            <h2>
+                Find Me Elsewhere
+            </h2>
+
+            <div class="social-grid">
+
+                <a
+                    class="social-card"
+                    href="https://propro-9.itch.io/"
+                    target="_blank"
+                    rel="noopener noreferrer">
+
+                    <strong>
+                        itch.io
+                    </strong>
+
+                    <span>
+                        Games and projects
+                    </span>
+
+                </a>
+
+
+                <a
+                    class="social-card"
+                    href="https://discord.gg/TgCeMFfEwG"
+                    target="_blank"
+                    rel="noopener noreferrer">
+
+                    <strong>
+                        Discord
+                    </strong>
+
+                    <span>
+                        Enter the containment chamber
+                    </span>
+
+                </a>
+
+
+                <a
+                    class="social-card"
+                    href="https://www.youtube.com/@Propro_9"
+                    target="_blank"
+                    rel="noopener noreferrer">
+
+                    <strong>
+                        YouTube
+                    </strong>
+
+                    <span>
+                        Videos, dev stuff, and chaos
+                    </span>
+
+                </a>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- IMAGE VIEWER -->
     <div id="image-viewer">
-        <img id="viewer-image" src="" alt="Screenshot">
+
+        <div class="viewer-close">
+            ×
+        </div>
+
+        <img
+            id="viewer-image"
+            src=""
+            alt="Game Screenshot">
+
     </div>
+
 
     <script>
-        const screenshots = document.getElementById("screenshots");
-        const viewer = document.getElementById("image-viewer");
-        const viewerImage = document.getElementById("viewer-image");
+
+        /*
+         * --------------------------------
+         * SCREENSHOT LOADER
+         * --------------------------------
+         */
+
+        const screenshotGrid =
+            document.getElementById("screenshot-grid");
+
+        const galleryStatus =
+            document.getElementById("gallery-status");
+
+        const viewer =
+            document.getElementById("image-viewer");
+
+        const viewerImage =
+            document.getElementById("viewer-image");
 
         const MAX_IMAGES = 50;
 
+        let loadedImages = 0;
+
+
         for (let i = 1; i <= MAX_IMAGES; i++) {
-            const img = document.createElement("img");
 
-            img.src = `img_${i}.png`;
-            img.alt = `Game Screenshot ${i}`;
+            const image = new Image();
 
-            img.onload = () => {
-                screenshots.appendChild(img);
+            image.src = `img_${i}.png`;
+            image.alt = `Game Screenshot ${i}`;
+
+
+            image.onload = () => {
+
+                loadedImages++;
+
+                const wrapper =
+                    document.createElement("div");
+
+                wrapper.className =
+                    "screenshot-wrapper";
+
+
+                image.addEventListener(
+                    "click",
+                    () => {
+
+                        viewerImage.src =
+                            image.src;
+
+                        viewer.style.display =
+                            "flex";
+
+                        document.body.style.overflow =
+                            "hidden";
+                    }
+                );
+
+
+                wrapper.appendChild(image);
+
+                screenshotGrid.appendChild(
+                    wrapper
+                );
+
+
+                galleryStatus.style.display =
+                    "none";
             };
 
-            img.onerror = () => {
-                img.remove();
+
+            image.onerror = () => {
+
+                if (
+                    i === MAX_IMAGES &&
+                    loadedImages === 0
+                ) {
+
+                    galleryStatus.textContent =
+                        "No screenshots found. The void has consumed them.";
+
+                }
+
             };
 
-            img.addEventListener("click", () => {
-                viewerImage.src = img.src;
-                viewer.style.display = "flex";
-            });
         }
 
-        viewer.addEventListener("click", () => {
-            viewer.style.display = "none";
-            viewerImage.src = "";
+
+        /*
+         * --------------------------------
+         * IMAGE VIEWER
+         * --------------------------------
+         */
+
+        viewer.addEventListener(
+            "click",
+            () => {
+
+                viewer.style.display =
+                    "none";
+
+                viewerImage.src =
+                    "";
+
+                document.body.style.overflow =
+                    "";
+            }
+        );
+
+
+        document.addEventListener(
+            "keydown",
+            event => {
+
+                if (
+                    event.key === "Escape"
+                ) {
+
+                    viewer.style.display =
+                        "none";
+
+                    viewerImage.src =
+                        "";
+
+                    document.body.style.overflow =
+                        "";
+                }
+
+            }
+        );
+
+
+        /*
+         * --------------------------------
+         * ACTIVE SIDEBAR TAB
+         * --------------------------------
+         */
+
+        const sections =
+            document.querySelectorAll("section");
+
+        const navLinks =
+            document.querySelectorAll(".nav a");
+
+
+        const observer =
+            new IntersectionObserver(
+
+                entries => {
+
+                    entries.forEach(entry => {
+
+                        if (!entry.isIntersecting) {
+                            return;
+                        }
+
+
+                        navLinks.forEach(link => {
+
+                            link.classList.remove(
+                                "active"
+                            );
+
+                        });
+
+
+                        const activeLink =
+                            document.querySelector(
+                                `.nav a[href="#${entry.target.id}"]`
+                            );
+
+
+                        if (activeLink) {
+
+                            activeLink.classList.add(
+                                "active"
+                            );
+
+                        }
+
+                    });
+
+                },
+
+                {
+                    threshold: 0.45
+                }
+
+            );
+
+
+        sections.forEach(section => {
+
+            observer.observe(section);
+
         });
+
     </script>
+
 </body>
 </html>
