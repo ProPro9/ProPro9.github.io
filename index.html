@@ -1,4 +1,5 @@
-    <!DOCTYPE html>
+```html
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -188,6 +189,43 @@
             line-height: 1.6;
         }
 
+        .random-button {
+            width: 100%;
+
+            padding: 9px 10px;
+            margin-bottom: 15px;
+
+            background: #17171d;
+            color: #9696a3;
+
+            border: 1px solid #2c2c36;
+            border-radius: 6px;
+
+            font-family: "Courier New", Courier, monospace;
+            font-size: 11px;
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition:
+                background 0.2s ease,
+                color 0.2s ease,
+                border-color 0.2s ease,
+                transform 0.2s ease;
+        }
+
+        .random-button:hover {
+            background: #1e1e26;
+            color: white;
+            border-color: #ff4757;
+
+            transform: translateY(-2px);
+        }
+
+        .random-button:active {
+            transform: translateY(0);
+        }
+
         /* --------------------------------
            MAIN CONTENT
         -------------------------------- */
@@ -328,17 +366,6 @@
 
             box-shadow:
                 0 12px 40px rgba(0, 0, 0, 0.18);
-        }
-
-        .terminal-line {
-            margin-top: 20px;
-
-            color: #b3b3bd;
-            font-size: 13px;
-        }
-
-        .terminal-line span {
-            color: #2ed573;
         }
 
         /* --------------------------------
@@ -526,7 +553,7 @@
         }
 
         /* --------------------------------
-           LINKS / CONTACT
+           LINKS
         -------------------------------- */
 
         .social-grid {
@@ -768,8 +795,17 @@
         </nav>
 
         <div class="sidebar-bottom">
+
+            <button
+                id="random-video-button"
+                class="random-button"
+                type="button">
+                Click Me
+            </button>
+
             Propro9<br>
             Hi
+
         </div>
 
     </aside>
@@ -1252,7 +1288,54 @@
 
         });
 
+
+        /*
+         * --------------------------------
+         * RANDOM YOUTUBE BUTTON
+         * --------------------------------
+         */
+
+        const randomVideoButton =
+            document.getElementById("random-video-button");
+
+
+        const randomVideos = [
+
+            "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+
+            "https://www.youtube.com/watch?v=jNQXAC9IVRw",
+
+            "https://www.youtube.com/watch?v=9bZkp7q19f0"
+
+        ];
+
+
+        randomVideoButton.addEventListener(
+            "click",
+            () => {
+
+                const randomIndex =
+                    Math.floor(
+                        Math.random() *
+                        randomVideos.length
+                    );
+
+
+                const selectedVideo =
+                    randomVideos[randomIndex];
+
+
+                window.open(
+                    selectedVideo,
+                    "_blank",
+                    "noopener,noreferrer"
+                );
+
+            }
+        );
+
     </script>
 
 </body>
 </html>
+```
