@@ -1,0 +1,3 @@
+# Optional website sections
+# Set to false to hide the PC Building dropdown on the main site.
+pc = true
