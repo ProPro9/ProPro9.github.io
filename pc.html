@@ -322,12 +322,177 @@
             border-radius: 8px;
         }
 
+
+        /* --------------------------------
+           BUILD REQUEST FORM
+        -------------------------------- */
+
+        .request-box {
+            max-width: 900px;
+            padding: 26px;
+
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+
+            box-shadow:
+                0 12px 40px rgba(0, 0, 0, 0.18);
+        }
+
+        .request-intro {
+            color: var(--muted);
+            margin-bottom: 24px;
+            max-width: 760px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .form-field {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        .form-field.full {
+            grid-column: 1 / -1;
+        }
+
+        .form-field label {
+            color: #cfcfd8;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .form-field small {
+            color: #6f6f7b;
+            font-size: 10px;
+            line-height: 1.5;
+        }
+
+        .form-field input,
+        .form-field select,
+        .form-field textarea {
+            width: 100%;
+
+            padding: 12px 13px;
+
+            background: #101015;
+            color: var(--text);
+
+            border: 1px solid #30303a;
+            border-radius: 6px;
+
+            outline: none;
+
+            font-family: "Courier New", Courier, monospace;
+            font-size: 13px;
+
+            transition:
+                border-color 0.18s ease,
+                background 0.18s ease,
+                box-shadow 0.18s ease;
+        }
+
+        .form-field textarea {
+            min-height: 125px;
+            resize: vertical;
+        }
+
+        .form-field input:focus,
+        .form-field select:focus,
+        .form-field textarea:focus {
+            background: #121219;
+            border-color: var(--accent);
+
+            box-shadow:
+                0 0 0 3px rgba(0, 71, 171, 0.12);
+        }
+
+        .conditional-fields {
+            grid-column: 1 / -1;
+
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+
+            padding: 18px;
+            margin-top: 2px;
+
+            background: rgba(0, 0, 0, 0.12);
+            border: 1px solid #292933;
+            border-radius: 7px;
+        }
+
+        .conditional-fields[hidden] {
+            display: none !important;
+        }
+
+        .form-actions {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 14px;
+
+            margin-top: 22px;
+        }
+
+        .submit-button {
+            padding: 12px 18px;
+
+            background: var(--accent);
+            color: white;
+
+            border: 1px solid var(--accent);
+            border-radius: 6px;
+
+            font-family: "Courier New", Courier, monospace;
+            font-weight: bold;
+            font-size: 13px;
+
+            transition:
+                transform 0.18s ease,
+                background 0.18s ease;
+        }
+
+        .submit-button:hover {
+            transform: translateY(-2px);
+            background: var(--accent-dark);
+        }
+
+        .form-note {
+            color: #71717d;
+            font-size: 10px;
+            line-height: 1.55;
+        }
+
+        .form-status {
+            margin-top: 16px;
+            min-height: 18px;
+
+            color: #8dbdff;
+            font-size: 12px;
+        }
+@media (max-width: 700px) {
+            .form-grid,
+            .conditional-fields {
+                grid-template-columns: 1fr;
+            }
+        }
+
         @media (pointer: fine) {
             html,
             body,
             body *,
             a,
             button,
+            input,
+            textarea,
+            select,
+            label,
             [role="button"] {
                 cursor: none !important;
             }
@@ -409,7 +574,11 @@
         @media (pointer: coarse) {
             body,
             a,
-            button {
+            button,
+            input,
+            textarea,
+            select,
+            label {
                 cursor: auto;
             }
 
@@ -513,6 +682,7 @@
 
                 <div class="nav-dropdown-content">
                     <a href="pc.html" class="active">PC Building Page</a>
+                    <a href="#request-build">Request a Build</a>
                 </div>
             </div>
 
@@ -614,6 +784,222 @@
             </div>
         </section>
 
+
+        <section class="section" id="request-build">
+            <div class="section-label">
+                03 // request a build
+            </div>
+
+            <h2>
+                Request a Build
+            </h2>
+
+            <div class="request-box">
+
+                <p class="request-intro">
+                    Already picked your parts? Paste the list.
+                    No idea what parts you need? Tell me your budget and what you want the PC to do.
+                </p>
+<form
+                    id="build-request-form"
+                    action="https://formspree.io/f/xzebkgjw"
+                    method="POST">
+
+                    <input
+                        type="hidden"
+                        name="form_type"
+                        value="PC Build Request">
+
+                    <div class="form-grid">
+
+                        <div class="form-field">
+                            <label for="customer-name">Name / nickname *</label>
+                            <input
+                                id="customer-name"
+                                name="name"
+                                type="text"
+                                maxlength="80"
+                                required
+                                autocomplete="name"
+                                placeholder="What should I call you?">
+                        </div>
+
+                        <div class="form-field">
+                            <label for="customer-email">Email *</label>
+                            <input
+                                id="customer-email"
+                                name="email"
+                                type="email"
+                                maxlength="160"
+                                required
+                                autocomplete="email"
+                                placeholder="you@example.com">
+                        </div>
+
+                        <div class="form-field">
+                            <label for="request-type">What do you need? *</label>
+                            <select
+                                id="request-type"
+                                name="request_type"
+                                required>
+                                <option value="help_choose" selected>Help me choose the parts</option>
+                                <option value="have_parts">I already have a parts list</option>
+                                <option value="upgrade">Upgrade an existing PC</option>
+                            </select>
+                        </div>
+
+                        <div class="form-field">
+                            <label for="budget">Budget *</label>
+                            <input
+                                id="budget"
+                                name="budget"
+                                type="text"
+                                maxlength="60"
+                                required
+                                placeholder="Example: $900 total">
+                            <small>
+                                Include whether this budget needs to cover tax, Windows, monitor, keyboard, etc.
+                            </small>
+                        </div>
+
+                        <div
+                            class="conditional-fields"
+                            id="help-choose-fields">
+
+                            <div class="form-field full">
+                                <label for="computer-use">What do you want the computer to do? *</label>
+                                <textarea
+                                    id="computer-use"
+                                    name="computer_use"
+                                    maxlength="1800"
+                                    placeholder="Games, editing, school, streaming, Blender, programming, etc."></textarea>
+                            </div>
+
+                            <div class="form-field">
+                                <label for="games-software">Games / software</label>
+                                <textarea
+                                    id="games-software"
+                                    name="games_software"
+                                    maxlength="1200"
+                                    placeholder="Minecraft, Fortnite, Godot, Blender..."></textarea>
+                            </div>
+
+                            <div class="form-field">
+                                <label for="performance-target">Performance target</label>
+                                <textarea
+                                    id="performance-target"
+                                    name="performance_target"
+                                    maxlength="1200"
+                                    placeholder="Example: 1080p 144 FPS, 1440p 60+ FPS, shaders, etc."></textarea>
+                            </div>
+
+                            <div class="form-field">
+                                <label for="preferences">Preferences</label>
+                                <textarea
+                                    id="preferences"
+                                    name="preferences"
+                                    maxlength="1200"
+                                    placeholder="Wi-Fi, Bluetooth, RGB, quiet build, small case, lots of storage..."></textarea>
+                            </div>
+
+                            <div class="form-field">
+                                <label for="existing-parts">Parts you already own</label>
+                                <textarea
+                                    id="existing-parts"
+                                    name="existing_parts"
+                                    maxlength="1200"
+                                    placeholder="Leave blank if you don't already have anything."></textarea>
+                            </div>
+
+                        </div>
+
+
+                        <div
+                            class="conditional-fields"
+                            id="parts-list-fields"
+                            hidden>
+
+                            <div class="form-field full">
+                                <label for="parts-list">Parts list *</label>
+                                <textarea
+                                    id="parts-list"
+                                    name="parts_list"
+                                    maxlength="4000"
+                                    placeholder="Paste a PCPartPicker list, links, or type the parts here."></textarea>
+                            </div>
+
+                            <div class="form-field full">
+                                <label for="parts-notes">Anything you want changed?</label>
+                                <textarea
+                                    id="parts-notes"
+                                    name="parts_notes"
+                                    maxlength="1500"
+                                    placeholder="Example: keep the GPU, but I'm fine changing the case or PSU."></textarea>
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-field">
+                            <label for="general-area">General area</label>
+                            <input
+                                id="general-area"
+                                name="general_area"
+                                type="text"
+                                maxlength="100"
+                                placeholder="City / general area only">
+                            <small>
+                                Don't put your exact home address here.
+                            </small>
+                        </div>
+
+                        <div class="form-field">
+                            <label for="deadline">When do you want it?</label>
+                            <input
+                                id="deadline"
+                                name="desired_timing"
+                                type="text"
+                                maxlength="100"
+                                placeholder="No rush / this month / before ___">
+                        </div>
+
+                        <div class="form-field full">
+                            <label for="extra-notes">Anything else?</label>
+                            <textarea
+                                id="extra-notes"
+                                name="extra_notes"
+                                maxlength="2000"
+                                placeholder="Questions, weird requirements, things I should know, etc."></textarea>
+                        </div>
+
+                    </div>
+
+                    <div class="form-actions">
+
+                        <button
+                            type="submit"
+                            class="submit-button">
+                            Send Build Request
+                        </button>
+
+                        <p class="form-note">
+                            This sends your build details by email. It does not take payment.
+                        </p>
+
+                    </div>
+
+                    <div
+                        class="form-status"
+                        id="form-status"
+                        aria-live="polite">
+                    </div>
+
+                </form>
+
+            </div>
+
+        </section>
+
     </main>
 
 
@@ -637,7 +1023,60 @@
         });
 
 
-        const cursorDot =
+
+
+        /*
+         * --------------------------------
+         * BUILD REQUEST FORM
+         * --------------------------------
+         */
+
+        const buildRequestForm =
+            document.getElementById("build-request-form");
+
+        const requestType =
+            document.getElementById("request-type");
+
+        const helpChooseFields =
+            document.getElementById("help-choose-fields");
+
+        const partsListFields =
+            document.getElementById("parts-list-fields");
+
+        const computerUse =
+            document.getElementById("computer-use");
+
+        const partsList =
+            document.getElementById("parts-list");
+
+        const formStatus =
+            document.getElementById("form-status");
+function updateRequestFields() {
+
+            const hasPartsList =
+                requestType.value === "have_parts";
+
+            helpChooseFields.hidden =
+                hasPartsList;
+
+            partsListFields.hidden =
+                !hasPartsList;
+
+            computerUse.required =
+                !hasPartsList;
+
+            partsList.required =
+                hasPartsList;
+
+        }
+
+
+        requestType.addEventListener(
+            "change",
+            updateRequestFields
+        );
+
+        updateRequestFields();const cursorDot =
             document.getElementById("cursor-dot");
 
         const cursorGlow =
@@ -672,7 +1111,9 @@
         });
 
 
-        document.querySelectorAll("a, button").forEach(element => {
+        document.querySelectorAll(
+            "a, button, input, textarea, select, label"
+        ).forEach(element => {
 
             element.addEventListener(
                 "mouseenter",
