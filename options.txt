@@ -1,4 +1,5 @@
 # Optional website sections
 # true = show PC Building dropdown
 # false = hide it
-pc = true
+pc = false
+
